@@ -1,33 +1,41 @@
-import React from 'react';
-import Aux from '../../../hoc/Auxiliary';
+import React, { Component } from 'react';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../UI/Button/Button';
 
-const orderSummary = props => {
+class OrderSummary extends Component {
 
-    const ingredientsSummary = Object.keys(props.ingredients)
-        .map(igKey => {
-            return (
-                <li key={igKey}>
-                    <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {props.ingredients[igKey]}
-                </li>
-            )
-        });
+    componentDidUpdate(){
+        console.log('Order Summary will update');
+    }
 
-    return (
-        <Aux>
-            <h3 style={{textAlign: 'center'}}> {"<<"} Tu orden {">>"}</h3>
-            <p>Una hamburguesa deliciosa con estos ingredientes:</p>
-            <ul>
-                {ingredientsSummary}
-            </ul>
-            <p><strong>El precio total es: {props.totalPrice.toFixed(2)}</strong></p>
-            <p>Continuar hacia el pago?</p>
-            <Button clicked={props.purchaseCancelled} btnType="Danger">CANCELAR</Button>
-            <Button clicked={props.purchaseContinued} btnType="Success">CONTINUAR</Button>
-        </Aux>
+    render() {
 
-    );
+        const ingredientsSummary = Object.keys(this.props.ingredients)
+            .map(igKey => {
+                return (
+                    <li key={igKey}>
+                        <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {this.props.ingredients[igKey]}
+                    </li>
+                )
+            });
 
-};
+        return (
 
-export default orderSummary;
+            <Aux>
+                <h3 style={{ textAlign: 'center' }}> {"<<"} Tu orden {">>"}</h3>
+                <p>Una hamburguesa deliciosa con estos ingredientes:</p>
+                <ul>
+                    {ingredientsSummary}
+                </ul>
+                <p><strong>El precio total es: {this.props.totalPrice.toFixed(2)}</strong></p>
+                <p>Continuar hacia el pago?</p>
+                <Button clicked={this.props.purchaseCancelled} btnType="Danger">CANCELAR</Button>
+                <Button clicked={this.props.purchaseContinued} btnType="Success">CONTINUAR</Button>
+            </Aux>
+
+
+        );
+    }
+}
+
+export default OrderSummary;
