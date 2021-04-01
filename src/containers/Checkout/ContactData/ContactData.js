@@ -21,7 +21,8 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     minLength: 5
-                }
+                },
+                touched: false
             },
             gender:{
                 elementType: 'select',
@@ -37,7 +38,8 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     defaultValue: 'selectGender'
-                }
+                },
+                touched: false
             },
             street:{
                 elementType: 'input',
@@ -50,7 +52,8 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     minLength: 5
-                }
+                },
+                touched: false
             },
             zipCode:{
                 elementType: 'input',
@@ -63,7 +66,8 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     minLength: 5
-                }
+                },
+                touched: false
             },
             country:{
                 elementType: 'input',
@@ -76,7 +80,8 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     minLength: 5
-                }
+                },
+                touched: false
             },
             email:{
                 elementType: 'input',
@@ -89,7 +94,8 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     minLength: 5
-                }
+                },
+                touched: false
             },
             deliveryMethod:{
                 elementType: 'select',
@@ -105,9 +111,11 @@ class ContactData extends Component {
                     required: true,
                     valid: false,
                     defaultValue: 'selectDelivery'
-                }
+                },
+                touched: false
             },
         },
+        formIsValid: false,
         loading: false
     }
     
@@ -172,11 +180,19 @@ class ContactData extends Component {
 
         updatedFormElement.value = event.target.value;
         updatedFormElement.validation.valid = this.checkValidity(updatedFormElement.value, updatedFormElement)
-
+        updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        console.log(updatedFormElement);
-        this.setState({orderForm: updatedOrderForm});
+        let formIsValid = true;
+
+        for(let inputIdentifier in updatedOrderForm){
+            if (!updatedOrderForm[inputIdentifier].validation.valid){
+                formIsValid = false;
+            }
+        }
+
+        //console.log(updatedFormElement);
+        this.setState({orderForm: updatedOrderForm, formIsValid:  formIsValid});
     }
 
     render() {
@@ -198,9 +214,11 @@ class ContactData extends Component {
                     inputtype={formElement.config.elementType}
                     elementConfig={formElement.config.elementConfig}
                     value={formElement.config.value}
+                    invalid={!formElement.config.validation.valid}
+                    touched={formElement.config.touched}
                     changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                 ))}
-                <Button btnType="Success" >ORDER</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
 
