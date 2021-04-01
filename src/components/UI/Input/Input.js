@@ -14,7 +14,7 @@ const input = props => {
                 value={props.value} onChange={props.changed} />;
             break;
         case ('select'):
-            console.log("Hay un select");
+            //console.log("Hay un select");
             inputElement = (
                 <select
                     className={classes.InputElement}
@@ -30,7 +30,7 @@ const input = props => {
             );
             break;
         default:
-            console.log("Hay un input");
+            //console.log("Hay un input");
             inputElement = <input
                 className={classes.InputElement}
                 {...props.elementConfig}
